@@ -246,12 +246,55 @@ ControllerConfig MySensor::getConfig() {
 	return cc;
 }
 
+#ifdef MY_REQUEST_NODE_ID_WITH_SERIAL_FEATURE
+#include <sha204_library.h>
+#include <sha204_lib_return_codes.h>
+#endif
+
 void MySensor::requestNodeId() {
+#ifdef MY_REQUEST_NODE_ID_WITH_SERIAL_FEATURE
+	atsha204Class sha204(MY_ATSHA204_PIN);
+	uint8_t rx_buffer[SHA204_RSP_SIZE_MAX];
+	uint8_t ret_code;
+
+	ret_code = sha204.sha204c_wakeup(rx_buffer);
+	if (ret_code != SHA204_SUCCESS)
+	{
+		debug(PSTR("ATSHA204 unresponsive\n"));
+		goto request_id;
+        }
+
+        // Output serial number on console
+	ret_code = sha204.getSerialNumber(rx_buffer);
+	if (ret_code != SHA204_SUCCESS)
+	{
+		debug(PSTR("Failed to obtain device serial number. Response: 0x%x\n"), ret_code);
+		goto request_id;
+	}
+
+	char serial[19];
+	char *p;
+	for (int i = 0; i < 9; i++)
+	{
+		p = &serial[i*2];
+		sprintf(p, "%02x", rx_buffer[i]);
+	}
+        serial[18] = 0;
+	debug(PSTR("Device serial: %s\n"), serial);
+
+request_id:
+	debug(PSTR("req id\n"));
+	radio.setAddress(nc.nodeId);
+	build(msg, nc.nodeId, GATEWAY_ADDRESS, NODE_SENSOR_ID, C_INTERNAL, I_ID_REQUEST, false).set(serial);
+	sendWrite(nc.parentNodeId, msg);
+	wait(2000);
+#else
 	debug(PSTR("req id\n"));
 	radio.setAddress(nc.nodeId);
 	build(msg, nc.nodeId, GATEWAY_ADDRESS, NODE_SENSOR_ID, C_INTERNAL, I_ID_REQUEST, false).set("");
 	sendWrite(nc.parentNodeId, msg);
 	wait(2000);
+#endif
 }
 
 void MySensor::setupNode() {

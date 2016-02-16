@@ -81,6 +81,9 @@
 // Disable to completly disable signing functionality in library
 //#define MY_SIGNING_FEATURE
 
+// Disable to completly disable sending ATSHA serial in node id request messages
+#define MY_REQUEST_NODE_ID_WITH_SERIAL_FEATURE
+
 // Define a suitable timeout for a signature verification session
 // Consider the turnaround from a nonce being generated to a signed message being received
 // which might vary, especially in networks with many hops. 5s ought to be enough for anyone.
