@@ -1,0 +1,9 @@
+Number  node18_volt     "spanning [%.2f V]"     <energy>        { mqtt="<[mysensor:MyMQTT/18/0/V_VOLTAGE:state:default]" }
+Number  node18_volt_grafiek     "spanningsverloop"
+Number  node18_current  "stroom [%.2f A]"       <energy>        { mqtt="<[mysensor:MyMQTT/18/1/V_CURRENT:state:default]" }
+Number  node18_current_grafiek  "stroomverloop"
+Number  node18_consumed_power   "vermogen [%.2f W]"     <inverter>      { mqtt="<[mysensor:MyMQTT/18/2/V_WATT:state:default]" }
+Number  node18_consumed_power_grafiek   "verbruik"
+Number  node18_import_power     "import (totaal) [%.2f kWh]"    <energy>        { mqtt="<[mysensor:MyMQTT/18/3/V_WATT:state:default]" }
+Number  node18_export_power     "export (totaal) [%.2f kWh]"    <energy>        { mqtt="<[mysensor:MyMQTT/18/4/V_WATT:state:default]" }
+Number  node18_total_power      "Total power [%.2f kWh]"        <energy>        { mqtt="<[mysensor:MyMQTT/18/5/V_WATT:state:default]" }

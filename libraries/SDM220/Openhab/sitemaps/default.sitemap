@@ -1,0 +1,33 @@
+sitemap default label="WSNatWork"
+{
+	Frame label="Metering" {
+		Group label="Electriciteit" icon="socket" {
+			Text item=node18_volt icon="house" {
+				Frame {
+					Switch item=node18_volt_grafiek label="volt Node18" mappings=[0="uur", 1="dag", 2="week"]					
+					Chart item=node18_volt period=h refresh=6000 visibility=[node18_volt_grafiek==0, node18_volt_grafiek==Uninitialized]					
+					Chart item=node18_volt period=D refresh=30000 visibility=[node18_volt_grafiek==1]					
+					Chart item=node18_volt period=W refresh=30000 visibility=[node18_volt_grafiek==2]					
+				}				
+			}			
+			Text item=node18_current icon="inverter" {
+				Frame {
+					Switch item=node18_current_grafiek label="stroom Node18" mappings=[0="uur", 1="dag", 2="week"]					
+					Chart item=node18_current period=h refresh=6000 visibility=[node18_current_grafiek==0, node18_current_grafiek==Uninitialized]					
+					Chart item=node18_current period=D refresh=30000 visibility=[node18_current_grafiek==1]					
+					Chart item=node18_current period=W refresh=30000 visibility=[node18_current_grafiek==2]					
+				}				
+			}			
+			Text item=node18_consumed_power icon="energy" {
+				Frame {
+					Switch item=node18_consumed_power_grafiek label="verbruik Node18" mappings=[0="uur", 1="dag", 2="week"]					
+					Chart item=node18_consumed_power period=h refresh=6000 visibility=[node18_consumed_power_grafiek==0, node18_consumed_power_grafiek==Uninitialized]					
+					Chart item=node18_consumed_power period=D refresh=30000 visibility=[node18_consumed_power_grafiek==1]					
+					Chart item=node18_consumed_power period=W refresh=30000 visibility=[node18_consumed_power_grafiek==2]					
+				}				
+			}			
+			Text item=node18_import_power icon="energy"			
+			Text item=node18_export_power icon="energy"			
+		}		
+	}	
+}
